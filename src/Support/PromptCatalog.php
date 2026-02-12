@@ -44,7 +44,7 @@ class PromptCatalog
         }
 
         throw new RuntimeException(sprintf(
-            'No prompt template found for operation "%s". Checked languages: %s',
+            'No language template found for operation "%s". Checked languages: %s',
             $operation,
             implode(', ', $candidates),
         ));

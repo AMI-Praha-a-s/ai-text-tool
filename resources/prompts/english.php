@@ -1,31 +1,31 @@
 <?php
 
 return [
-    'summarization' => [
+    'summarize' => [
         'system' => 'You are a precise writing assistant. Keep factual accuracy and avoid adding new information.',
         'user' => <<<'PROMPT'
 Create a high-quality summary of the following text.
 Target summary length: about :length characters.
-Keep the output in the same language as the source text.
+Write the output in this language: :output_language.
 Preserve the original meaning and key points.
 
 Text:
 :text
 PROMPT,
     ],
-    'heading' => [
+    'headline' => [
         'system' => 'You create concise, meaningful headings.',
         'user' => <<<'PROMPT'
 Create one heading for the following text.
 Maximum heading length: :length characters.
-Keep the heading in the same language as the source text.
+Write the heading in this language: :output_language.
 Do not add quotation marks.
 
 Text:
 :text
 PROMPT,
     ],
-    'translation' => [
+    'translate' => [
         'system' => 'You are an expert translator focused on meaning, tone, and natural phrasing.',
         'user' => <<<'PROMPT'
 Translate the following text into: :target_language.
@@ -44,7 +44,8 @@ Repair the following text:
 - fix grammar mistakes,
 - add missing punctuation,
 - improve readability where needed.
-Keep the original language and meaning.
+Write the corrected text in this language: :output_language.
+Preserve the original meaning.
 Return only the repaired text.
 
 Text:

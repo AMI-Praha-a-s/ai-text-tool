@@ -17,7 +17,7 @@ class PromptCatalogTest extends TestCase
         $prompt = $catalog->operation('repair', 'czech');
 
         $this->assertSame('czech', $prompt['language']);
-        $this->assertStringContainsString('Oprav nasledujici text', $prompt['user']);
+        $this->assertStringContainsString('Oprav následující text', $prompt['user']);
     }
 
     public function test_it_falls_back_to_default_language_when_requested_is_missing(): void
@@ -28,10 +28,10 @@ class PromptCatalogTest extends TestCase
             defaultLanguage: 'spanish',
         );
 
-        $prompt = $catalog->operation('heading', 'french');
+        $prompt = $catalog->operation('headline', 'french');
 
         $this->assertSame('spanish', $prompt['language']);
-        $this->assertStringContainsString('Crea un titulo', $prompt['user']);
+        $this->assertStringContainsString('Crea un título', $prompt['user']);
     }
 
     public function test_it_falls_back_to_english_when_default_is_missing(): void
@@ -42,7 +42,7 @@ class PromptCatalogTest extends TestCase
             defaultLanguage: 'french',
         );
 
-        $prompt = $catalog->operation('summarization', 'italian');
+        $prompt = $catalog->operation('summarize', 'italian');
 
         $this->assertSame('english', $prompt['language']);
         $this->assertStringContainsString('Create a high-quality summary', $prompt['user']);

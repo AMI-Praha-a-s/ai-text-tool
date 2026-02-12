@@ -11,33 +11,32 @@ class AiTextTool
     public function __construct(
         private readonly PromptCatalog $promptCatalog,
         private readonly TextExecutor $executor,
-        private readonly ?string $provider = null,
         private readonly ?string $model = null,
         private readonly ?int $timeout = null,
-        private ?string $promptLanguage = null,
+        private ?string $language = null,
     ) {}
 
-    public function inPromptLanguage(string $language): self
+    public function usingLanguage(string $language): self
     {
         $normalized = strtolower(trim($language));
 
         if ($normalized === '') {
-            throw new InvalidArgumentException('Prompt language must not be empty.');
+            throw new InvalidArgumentException('Language must not be empty.');
         }
 
         $clone = clone $this;
-        $clone->promptLanguage = $normalized;
+        $clone->language = $normalized;
 
         return $clone;
     }
 
-    public function summarization(string $sourceText, int $length): string
+    public function summarize(string $sourceText, int $length): string
     {
         $this->assertNonEmptyText($sourceText);
         $this->assertPositiveLength($length, 'Summary length');
 
         return $this->run(
-            operation: 'summarization',
+            operation: 'summarize',
             replacements: [
                 ':length' => (string) $length,
                 ':text' => trim($sourceText),
@@ -45,13 +44,13 @@ class AiTextTool
         );
     }
 
-    public function heading(string $sourceText, int $length): string
+    public function headline(string $sourceText, int $length): string
     {
         $this->assertNonEmptyText($sourceText);
         $this->assertPositiveLength($length, 'Heading length');
 
         return $this->run(
-            operation: 'heading',
+            operation: 'headline',
             replacements: [
                 ':length' => (string) $length,
                 ':text' => trim($sourceText),
@@ -59,7 +58,7 @@ class AiTextTool
         );
     }
 
-    public function translation(string $sourceText, string $targetLanguage, ?string $sourceLanguage = null): string
+    public function translate(string $sourceText, string $targetLanguage, ?string $sourceLanguage = null): string
     {
         $this->assertNonEmptyText($sourceText);
 
@@ -74,7 +73,7 @@ class AiTextTool
             : 'auto';
 
         return $this->run(
-            operation: 'translation',
+            operation: 'translate',
             replacements: [
                 ':target_language' => $targetLanguage,
                 ':source_language' => $sourceLanguage,
@@ -97,15 +96,29 @@ class AiTextTool
 
     private function run(string $operation, array $replacements): string
     {
-        $prompt = $this->promptCatalog->operation($operation, $this->promptLanguage);
+        $prompt = $this->promptCatalog->operation($operation, $this->language);
+        $replacements = $this->withOutputLanguage($operation, $prompt, $replacements);
 
         return $this->executor->generate(
             instructions: $this->interpolate((string) $prompt['system'], $replacements),
             prompt: $this->interpolate((string) $prompt['user'], $replacements),
-            provider: $this->provider,
             model: $this->model,
             timeout: $this->timeout,
         );
+    }
+
+    /**
+     * @param array{language:string, system:string, user:string} $prompt
+     */
+    private function withOutputLanguage(string $operation, array $prompt, array $replacements): array
+    {
+        if ($operation === 'translate') {
+            return $replacements;
+        }
+
+        $replacements[':output_language'] = $this->language ?? (string) $prompt['language'];
+
+        return $replacements;
     }
 
     private function interpolate(string $template, array $replacements): string

@@ -1,31 +1,31 @@
 <?php
 
 return [
-    'summarization' => [
+    'summarize' => [
         'system' => 'Jsi přesný asistent pro úpravu textu. Zachovej fakta a nepřidávej nové informace.',
         'user' => <<<'PROMPT'
 Vytvoř kvalitní shrnutí následujícího textu.
 Cílová délka shrnutí: přibližně :length znaků.
-Výstup ponech ve stejném jazyce jako zdrojový text.
+Výstup napiš v tomto jazyce: :output_language.
 Zachovej původní význam a klíčové body.
 
 Text:
 :text
 PROMPT,
     ],
-    'heading' => [
+    'headline' => [
         'system' => 'Vytváříš stručné a výstižné nadpisy.',
         'user' => <<<'PROMPT'
 Vytvoř jeden nadpis k následujícímu textu.
 Maximální délka nadpisu: :length znaků.
-Nadpis ponech ve stejném jazyce jako zdrojový text.
+Nadpis napiš v tomto jazyce: :output_language.
 Nevracej uvozovky.
 
 Text:
 :text
 PROMPT,
     ],
-    'translation' => [
+    'translate' => [
         'system' => 'Jsi odborný překladatel zaměřený na význam, tón a přirozené formulace.',
         'user' => <<<'PROMPT'
 Přelož následující text do jazyka: :target_language.
@@ -44,7 +44,8 @@ Oprav následující text:
 - oprav gramatické chyby,
 - doplň chybějící interpunkci,
 - podle potřeby zlepši čitelnost.
-Ponech původní jazyk i význam.
+Opravený text napiš v tomto jazyce: :output_language.
+Zachovej původní význam.
 Vrať pouze opravený text.
 
 Text:

@@ -1,31 +1,31 @@
 <?php
 
 return [
-    'summarization' => [
+    'summarize' => [
         'system' => 'Eres un asistente de redacción preciso. Conserva los hechos y no añadas información nueva.',
         'user' => <<<'PROMPT'
 Crea un resumen de alta calidad del siguiente texto.
 Longitud objetivo del resumen: aproximadamente :length caracteres.
-Mantén la salida en el mismo idioma que el texto de origen.
+Escribe la salida en este idioma: :output_language.
 Conserva el significado original y los puntos clave.
 
 Texto:
 :text
 PROMPT,
     ],
-    'heading' => [
+    'headline' => [
         'system' => 'Creas títulos breves y claros.',
         'user' => <<<'PROMPT'
 Crea un título para el siguiente texto.
 Longitud máxima del título: :length caracteres.
-Mantén el título en el mismo idioma que el texto de origen.
+Escribe el título en este idioma: :output_language.
 No incluyas comillas.
 
 Texto:
 :text
 PROMPT,
     ],
-    'translation' => [
+    'translate' => [
         'system' => 'Eres un traductor experto centrado en significado, tono y naturalidad.',
         'user' => <<<'PROMPT'
 Traduce el siguiente texto al idioma: :target_language.
@@ -44,7 +44,8 @@ Corrige el siguiente texto:
 - corrige errores gramaticales,
 - agrega la puntuación faltante,
 - mejora la legibilidad cuando sea necesario.
-Mantén el idioma y el significado original.
+Escribe el texto corregido en este idioma: :output_language.
+Conserva el significado original.
 Devuelve solo el texto corregido.
 
 Texto:

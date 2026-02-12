@@ -1,12 +1,12 @@
 {
     "name": "amipraha/ai-text-tool",
-    "description": "Laravel AI-powered text operations with multilingual prompt packs.",
+    "description": "OpenAI-powered text operations for Laravel with multilingual language packs.",
     "type": "library",
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "illuminate/support": "^12.0",
-        "laravel/ai": "^1.0"
+        "illuminate/http": "^12.0",
+        "illuminate/support": "^12.0"
     },
     "require-dev": {
         "mockery/mockery": "^1.6",

@@ -9,24 +9,23 @@ use AmiPraha\AiTextTool\Tests\Fakes\FakeExecutor;
 
 class FacadeTest extends TestCase
 {
-    public function test_facade_supports_fluent_prompt_language_override(): void
+    public function test_facade_supports_fluent_language_override(): void
     {
         $fakeExecutor = new FakeExecutor('facade-output');
 
         $this->app->bind(TextExecutor::class, fn () => $fakeExecutor);
-        $this->app['config']->set('ai-text-tool.provider', 'openai');
-        $this->app['config']->set('ai-text-tool.model', 'gpt-4.1-mini');
+        $this->app['config']->set('ai-text-tool.openai_model', 'gpt-4.1-mini');
         $this->app['config']->set('ai-text-tool.timeout', 45);
 
         $this->app->forgetInstance(AiTextToolService::class);
         AiTextToolFacade::clearResolvedInstance(AiTextToolService::class);
 
-        $result = AiTextToolFacade::inPromptLanguage('german')->summarization('Beispieltext', 90);
+        $result = AiTextToolFacade::usingLanguage('german')->summarize('Beispieltext', 90);
 
         $this->assertSame('facade-output', $result);
-        $this->assertSame('openai', $fakeExecutor->calls[0]['provider']);
         $this->assertSame('gpt-4.1-mini', $fakeExecutor->calls[0]['model']);
         $this->assertSame(45, $fakeExecutor->calls[0]['timeout']);
-        $this->assertStringContainsString('Du bist ein praeziser Schreibassistent', $fakeExecutor->calls[0]['instructions']);
+        $this->assertStringContainsString('Du bist ein präziser Schreibassistent', $fakeExecutor->calls[0]['instructions']);
+        $this->assertStringContainsString('Schreibe die Ausgabe in dieser Sprache: german.', $fakeExecutor->calls[0]['prompt']);
     }
 }

@@ -1,31 +1,31 @@
 <?php
 
 return [
-    'summarization' => [
+    'summarize' => [
         'system' => 'Du bist ein präziser Schreibassistent. Bewahre Fakten und füge keine neuen Informationen hinzu.',
         'user' => <<<'PROMPT'
 Erstelle eine hochwertige Zusammenfassung des folgenden Textes.
 Ziel-Länge der Zusammenfassung: etwa :length Zeichen.
-Lass die Ausgabe in derselben Sprache wie der Ausgangstext.
+Schreibe die Ausgabe in dieser Sprache: :output_language.
 Bewahre die ursprüngliche Bedeutung und die wichtigsten Punkte.
 
 Text:
 :text
 PROMPT,
     ],
-    'heading' => [
+    'headline' => [
         'system' => 'Du erstellst kurze und aussagekräftige Überschriften.',
         'user' => <<<'PROMPT'
 Erstelle eine Überschrift für den folgenden Text.
 Maximale Überschriftenlänge: :length Zeichen.
-Die Überschrift soll in derselben Sprache wie der Ausgangstext sein.
+Schreibe die Überschrift in dieser Sprache: :output_language.
 Gib keine Anführungszeichen aus.
 
 Text:
 :text
 PROMPT,
     ],
-    'translation' => [
+    'translate' => [
         'system' => 'Du bist ein professioneller Übersetzer mit Fokus auf Bedeutung, Ton und natürliche Formulierungen.',
         'user' => <<<'PROMPT'
 Übersetze den folgenden Text in die Sprache: :target_language.
@@ -44,7 +44,8 @@ Korrigiere den folgenden Text:
 - behebe Grammatikfehler,
 - ergänze fehlende Zeichensetzung,
 - verbessere bei Bedarf die Lesbarkeit.
-Behalte Sprache und Bedeutung des Originals bei.
+Schreibe den korrigierten Text in dieser Sprache: :output_language.
+Bewahre die ursprüngliche Bedeutung.
 Gib nur den korrigierten Text zurück.
 
 Text:

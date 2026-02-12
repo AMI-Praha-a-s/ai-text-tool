@@ -3,33 +3,34 @@
 return [
     /*
     |--------------------------------------------------------------------------
-    | Default prompt language
+    | Default language
     |--------------------------------------------------------------------------
     |
-    | Available prompt files: english, czech, slovak, german, spanish.
+    | Available language files: english, czech, slovak, german, spanish.
     |
     */
-    'default_prompt_language' => env('AI_TEXT_TOOL_PROMPT_LANGUAGE', 'english'),
+    'default_language' => env('AI_TEXT_TOOL_LANGUAGE', 'english'),
 
     /*
     |--------------------------------------------------------------------------
-    | Optional custom prompt path
+    | Optional custom language path
     |--------------------------------------------------------------------------
     |
-    | If set, language files from this directory override package prompt files.
+    | If set, language files from this directory override package language files.
     |
     */
-    'custom_prompt_path' => env('AI_TEXT_TOOL_PROMPT_PATH'),
+    'custom_language_path' => env('AI_TEXT_TOOL_LANGUAGE_PATH'),
 
     /*
     |--------------------------------------------------------------------------
-    | Laravel AI SDK provider/model runtime options
+    | OpenAI runtime options
     |--------------------------------------------------------------------------
     |
-    | Keep null to use default provider/model from config/ai.php.
+    | Set OpenAI credentials and optional model/base URL overrides.
     |
     */
-    'provider' => env('AI_TEXT_TOOL_PROVIDER'),
-    'model' => env('AI_TEXT_TOOL_MODEL'),
+    'openai_api_key' => env('AI_TEXT_TOOL_OPENAI_API_KEY', env('OPENAI_API_KEY')),
+    'openai_model' => env('AI_TEXT_TOOL_OPENAI_MODEL', 'gpt-5-mini'),
+    'openai_base_url' => env('AI_TEXT_TOOL_OPENAI_BASE_URL', 'https://api.openai.com/v1'),
     'timeout' => (int) env('AI_TEXT_TOOL_TIMEOUT', 60),
 ];
