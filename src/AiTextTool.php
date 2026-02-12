@@ -13,19 +13,13 @@ class AiTextTool
         private readonly TextExecutor $executor,
         private readonly ?string $model = null,
         private readonly ?int $timeout = null,
-        private ?string $language = null,
+        private ?Language $language = null,
     ) {}
 
-    public function usingLanguage(string $language): self
+    public function usingLanguage(Language $language): self
     {
-        $normalized = strtolower(trim($language));
-
-        if ($normalized === '') {
-            throw new InvalidArgumentException('Language must not be empty.');
-        }
-
         $clone = clone $this;
-        $clone->language = $normalized;
+        $clone->language = $language;
 
         return $clone;
     }
@@ -58,25 +52,15 @@ class AiTextTool
         );
     }
 
-    public function translate(string $sourceText, string $targetLanguage, ?string $sourceLanguage = null): string
+    public function translate(string $sourceText, Language $targetLanguage, ?Language $sourceLanguage = null): string
     {
         $this->assertNonEmptyText($sourceText);
-
-        $targetLanguage = trim($targetLanguage);
-
-        if ($targetLanguage === '') {
-            throw new InvalidArgumentException('Target language must not be empty.');
-        }
-
-        $sourceLanguage = is_string($sourceLanguage) && trim($sourceLanguage) !== ''
-            ? trim($sourceLanguage)
-            : 'auto';
 
         return $this->run(
             operation: 'translate',
             replacements: [
-                ':target_language' => $targetLanguage,
-                ':source_language' => $sourceLanguage,
+                ':target_language' => $targetLanguage->value,
+                ':source_language' => $sourceLanguage?->value ?? 'auto',
                 ':text' => trim($sourceText),
             ],
         );
@@ -116,7 +100,7 @@ class AiTextTool
             return $replacements;
         }
 
-        $replacements[':output_language'] = $this->language ?? (string) $prompt['language'];
+        $replacements[':output_language'] = $this->language?->value ?? (string) $prompt['language'];
 
         return $replacements;
     }

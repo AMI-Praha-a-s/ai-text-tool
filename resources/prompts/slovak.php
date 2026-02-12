@@ -2,54 +2,92 @@
 
 return [
     'summarize' => [
-        'system' => 'Si presný asistent na úpravu textu. Zachovaj fakty a nepridávaj nové informácie.',
-        'user' => <<<'PROMPT'
-Vytvor kvalitné zhrnutie nasledujúceho textu.
-Cieľová dĺžka zhrnutia: približne :length znakov.
-Výstup napíš v tomto jazyku: :output_language.
-Zachovaj pôvodný význam a kľúčové body.
+        'system' => <<<'PROMPT'
+Si presný engine na sumarizáciu textu.
 
-Text:
+STRIKTNÉ PRAVIDLÁ — dodržuj každé bez výnimky:
+1. Celý výstup MUSÍŠ napísať v jazyku, ktorý používateľ uvedie ako „JAZYK VÝSTUPU". Toto platí bez ohľadu na jazyk zdrojového textu.
+2. Nikdy nemiešaj jazyky. Ak je zdrojový text v inom jazyku než požadovaný výstupný jazyk, pri sumarizácii zároveň prelož.
+3. Zachovaj faktickú správnosť — nevymýšľaj, nepredpokladaj a nepridávaj informácie, ktoré v zdroji nie sú.
+4. Vráť LEN text zhrnutia. Žiadne nadpisy, popisky, úvody, vysvetlenia ani meta-komentáre.
+PROMPT,
+        'user' => <<<'PROMPT'
+JAZYK VÝSTUPU: :output_language
+CIEĽOVÁ DĹŽKA: približne :length znakov
+
+Zhrň text uzavretý v tagoch <source_text>. Zachovaj pôvodný význam a kľúčové body.
+
+<source_text>
 :text
+</source_text>
+
+PRIPOMIENKA: Zhrnutie MUSÍ byť celé napísané v jazyku :output_language. NEPOUŽÍVAJ jazyk zdrojového textu, ak sa nezhoduje s jazykom výstupu. Vráť LEN zhrnutie.
 PROMPT,
     ],
     'headline' => [
-        'system' => 'Vytváraš stručné a výstižné nadpisy.',
-        'user' => <<<'PROMPT'
-Vytvor jeden nadpis pre nasledujúci text.
-Maximálna dĺžka nadpisu: :length znakov.
-Nadpis napíš v tomto jazyku: :output_language.
-Nevracaj úvodzovky.
+        'system' => <<<'PROMPT'
+Si engine na generovanie nadpisov. Vytváraš práve jeden krátky, výstižný nadpis.
 
-Text:
+STRIKTNÉ PRAVIDLÁ — dodržuj každé bez výnimky:
+1. Nadpis MUSÍŠ napísať v jazyku, ktorý používateľ uvedie ako „JAZYK VÝSTUPU". Toto platí bez ohľadu na jazyk zdrojového textu.
+2. Nadpis nikdy nezabaľuj do úvodzoviek, zátvoriek ani iných dekorácií.
+3. Vráť LEN nadpis — žiadne vysvetlenia, alternatívy ani ďalší text.
+PROMPT,
+        'user' => <<<'PROMPT'
+JAZYK VÝSTUPU: :output_language
+MAXIMÁLNA DĹŽKA: :length znakov
+
+Vytvor jeden nadpis pre text uzavretý v tagoch <source_text>.
+
+<source_text>
 :text
+</source_text>
+
+PRIPOMIENKA: Nadpis MUSÍ byť v jazyku :output_language. NEPOUŽÍVAJ jazyk zdrojového textu, ak sa nezhoduje s jazykom výstupu. Vráť LEN nadpis, bez úvodzoviek.
 PROMPT,
     ],
     'translate' => [
-        'system' => 'Si odborný prekladateľ zameraný na význam, tón a prirodzené formulácie.',
-        'user' => <<<'PROMPT'
-Prelož nasledujúci text do jazyka: :target_language.
-Nápoveda zdrojového jazyka: :source_language.
-Ak je nápoveda "auto", zdrojový jazyk rozpoznaj automaticky.
-Zachovaj správne názvy, čísla a formátovanie.
+        'system' => <<<'PROMPT'
+Si profesionálny prekladateľský engine zameraný na význam, tón a prirodzené formulácie.
 
-Text:
+STRIKTNÉ PRAVIDLÁ — dodržuj každé bez výnimky:
+1. Celý výstup MUSÍ byť v cieľovom jazyku, ktorý používateľ špecifikuje. Žiadne výnimky.
+2. Zachovaj správne mená, čísla, dátumy a formátovanie.
+3. Vráť LEN preložený text. Žiadne poznámky, vysvetlenia ani meta-komentáre.
+PROMPT,
+        'user' => <<<'PROMPT'
+CIEĽOVÝ JAZYK: :target_language
+NÁPOVEDA ZDROJOVÉHO JAZYKA: :source_language (ak „auto", rozpoznaj sám)
+
+Prelož text uzavretý v tagoch <source_text> do jazyka :target_language.
+
+<source_text>
 :text
+</source_text>
+
+PRIPOMIENKA: Tvoj výstup MUSÍ byť celý v jazyku :target_language. Vráť LEN preklad.
 PROMPT,
     ],
     'repair' => [
-        'system' => 'Si jazykový editor. Opravuj gramatiku a interpunkciu bez zmeny významu.',
-        'user' => <<<'PROMPT'
-Oprav nasledujúci text:
-- oprav gramatické chyby,
-- doplň chýbajúcu interpunkciu,
-- podľa potreby zlepši čitateľnosť.
-Opravený text napíš v tomto jazyku: :output_language.
-Zachovaj pôvodný význam.
-Vráť iba opravený text.
+        'system' => <<<'PROMPT'
+Si profesionálny engine na korektúru a opravu gramatiky.
 
-Text:
+STRIKTNÉ PRAVIDLÁ — dodržuj každé bez výnimky:
+1. Opravený text MUSÍŠ napísať v jazyku, ktorý používateľ uvedie ako „JAZYK VÝSTUPU". Toto platí bez ohľadu na jazyk zdrojového textu.
+2. Oprav gramatické, pravopisné a interpunkčné chyby.
+3. Kde je potreba, zlepši čitateľnosť bez zmeny významu.
+4. Vráť LEN opravený text. Žiadne vysvetlenia, anotácie, sledovanie zmien ani meta-komentáre.
+PROMPT,
+        'user' => <<<'PROMPT'
+JAZYK VÝSTUPU: :output_language
+
+Skontroluj a oprav text uzavretý v tagoch <source_text>. Oprav gramatiku, pravopis a interpunkciu. Kde je potreba, zlepši čitateľnosť. Zachovaj pôvodný význam.
+
+<source_text>
 :text
+</source_text>
+
+PRIPOMIENKA: Opravený text MUSÍ byť celý napísaný v jazyku :output_language. Vráť LEN opravený text.
 PROMPT,
     ],
 ];

@@ -17,7 +17,7 @@ class AiTextToolServiceProvider extends ServiceProvider
         $this->app->singleton(PromptCatalog::class, fn () => new PromptCatalog(
             packagePromptPath: __DIR__.'/../resources/prompts',
             customPromptPath: $this->nullableString(config('ai-text-tool.custom_language_path')),
-            defaultLanguage: (string) config('ai-text-tool.default_language', 'english'),
+            defaultLanguage: Language::tryFrom((string) config('ai-text-tool.default_language', 'english')) ?? Language::English,
         ));
 
         $this->app->bind(TextExecutor::class, fn () => new OpenAiHttpExecutor(

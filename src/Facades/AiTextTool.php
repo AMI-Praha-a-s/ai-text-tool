@@ -2,13 +2,14 @@
 
 namespace AmiPraha\AiTextTool\Facades;
 
+use AmiPraha\AiTextTool\Language;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static \AmiPraha\AiTextTool\AiTextTool usingLanguage(string $language)
+ * @method static \AmiPraha\AiTextTool\AiTextTool usingLanguage(Language $language)
  * @method static string summarize(string $sourceText, int $length)
  * @method static string headline(string $sourceText, int $length)
- * @method static string translate(string $sourceText, string $targetLanguage, ?string $sourceLanguage = null)
+ * @method static string translate(string $sourceText, Language $targetLanguage, ?Language $sourceLanguage = null)
  * @method static string repair(string $sourceText)
  *
  * @mixin \AmiPraha\AiTextTool\AiTextTool

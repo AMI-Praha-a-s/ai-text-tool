@@ -5,6 +5,7 @@ namespace AmiPraha\AiTextTool\Tests;
 use AmiPraha\AiTextTool\AiTextTool as AiTextToolService;
 use AmiPraha\AiTextTool\Contracts\TextExecutor;
 use AmiPraha\AiTextTool\Facades\AiTextTool as AiTextToolFacade;
+use AmiPraha\AiTextTool\Language;
 use AmiPraha\AiTextTool\Tests\Fakes\FakeExecutor;
 
 class FacadeTest extends TestCase
@@ -20,12 +21,12 @@ class FacadeTest extends TestCase
         $this->app->forgetInstance(AiTextToolService::class);
         AiTextToolFacade::clearResolvedInstance(AiTextToolService::class);
 
-        $result = AiTextToolFacade::usingLanguage('german')->summarize('Beispieltext', 90);
+        $result = AiTextToolFacade::usingLanguage(Language::German)->summarize('Beispieltext', 90);
 
         $this->assertSame('facade-output', $result);
         $this->assertSame('gpt-4.1-mini', $fakeExecutor->calls[0]['model']);
         $this->assertSame(45, $fakeExecutor->calls[0]['timeout']);
-        $this->assertStringContainsString('Du bist ein präziser Schreibassistent', $fakeExecutor->calls[0]['instructions']);
-        $this->assertStringContainsString('Schreibe die Ausgabe in dieser Sprache: german.', $fakeExecutor->calls[0]['prompt']);
+        $this->assertStringContainsString('Du bist eine präzise Textzusammenfassungs-Engine', $fakeExecutor->calls[0]['instructions']);
+        $this->assertStringContainsString('AUSGABESPRACHE: german', $fakeExecutor->calls[0]['prompt']);
     }
 }

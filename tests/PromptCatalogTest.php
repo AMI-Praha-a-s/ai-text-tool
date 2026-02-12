@@ -2,6 +2,7 @@
 
 namespace AmiPraha\AiTextTool\Tests;
 
+use AmiPraha\AiTextTool\Language;
 use AmiPraha\AiTextTool\Support\PromptCatalog;
 
 class PromptCatalogTest extends TestCase
@@ -11,40 +12,39 @@ class PromptCatalogTest extends TestCase
         $catalog = new PromptCatalog(
             packagePromptPath: __DIR__.'/../resources/prompts',
             customPromptPath: null,
-            defaultLanguage: 'english',
+            defaultLanguage: Language::English,
         );
 
-        $prompt = $catalog->operation('repair', 'czech');
+        $prompt = $catalog->operation('repair', Language::Czech);
 
         $this->assertSame('czech', $prompt['language']);
-        $this->assertStringContainsString('Oprav následující text', $prompt['user']);
+        $this->assertStringContainsString('Zkontroluj a oprav text', $prompt['user']);
     }
 
-    public function test_it_falls_back_to_default_language_when_requested_is_missing(): void
+    public function test_it_falls_back_to_default_language_when_requested_is_null(): void
     {
         $catalog = new PromptCatalog(
             packagePromptPath: __DIR__.'/../resources/prompts',
             customPromptPath: null,
-            defaultLanguage: 'spanish',
+            defaultLanguage: Language::Spanish,
         );
 
-        $prompt = $catalog->operation('headline', 'french');
+        $prompt = $catalog->operation('headline', null);
 
         $this->assertSame('spanish', $prompt['language']);
-        $this->assertStringContainsString('Crea un título', $prompt['user']);
+        $this->assertStringContainsString('Crea un titular', $prompt['user']);
     }
 
-    public function test_it_falls_back_to_english_when_default_is_missing(): void
+    public function test_it_uses_default_language_when_no_language_requested(): void
     {
         $catalog = new PromptCatalog(
             packagePromptPath: __DIR__.'/../resources/prompts',
             customPromptPath: null,
-            defaultLanguage: 'french',
+            defaultLanguage: Language::German,
         );
 
-        $prompt = $catalog->operation('summarize', 'italian');
+        $prompt = $catalog->operation('summarize');
 
-        $this->assertSame('english', $prompt['language']);
-        $this->assertStringContainsString('Create a high-quality summary', $prompt['user']);
+        $this->assertSame('german', $prompt['language']);
     }
 }

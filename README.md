@@ -18,11 +18,13 @@
 
 ## Supported Languages
 
-- `english`
-- `czech`
-- `slovak`
-- `german`
-- `spanish`
+Languages are defined by the `AmiPraha\AiTextTool\Language` enum:
+
+- `Language::English`
+- `Language::Czech`
+- `Language::Slovak`
+- `Language::German`
+- `Language::Spanish`
 
 ## Installation
 
@@ -46,7 +48,7 @@ php artisan vendor:publish --tag=ai-text-tool-languages
 
 File: `config/ai-text-tool.php`
 
-- `default_language`: default language used by package.
+- `default_language`: default language used by package (must match a `Language` enum value).
 - `custom_language_path`: optional directory with language files that override package language files.
 - `openai_api_key`: OpenAI API key used for chat completion requests.
 - `openai_model`: OpenAI model used by package operations.
@@ -81,18 +83,19 @@ AI_TEXT_TOOL_TIMEOUT=60
 
 ```php
 use AmiPraha\AiTextTool\Facades\AiTextTool;
+use AmiPraha\AiTextTool\Language;
 
 $summary = AiTextTool::summarize($sourceText, 450);
 $headline = AiTextTool::headline($sourceText, 50);
-$translation = AiTextTool::translate($sourceText, 'slovak', 'czech');
+$translation = AiTextTool::translate($sourceText, Language::Slovak, Language::Czech);
 $repaired = AiTextTool::repair($sourceText);
 ```
 
 ### Fluent per-call language override
 
 ```php
-$summary = AiTextTool::usingLanguage('czech')->summarize($sourceText, 450);
-$headline = AiTextTool::usingLanguage('german')->headline($sourceText, 50);
+$summary = AiTextTool::usingLanguage(Language::Czech)->summarize($sourceText, 450);
+$headline = AiTextTool::usingLanguage(Language::German)->headline($sourceText, 50);
 ```
 
 The override is immutable and per-call, so it does not change global config defaults.

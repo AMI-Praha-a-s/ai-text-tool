@@ -6,7 +6,8 @@ return [
     | Default language
     |--------------------------------------------------------------------------
     |
-    | Available language files: english, czech, slovak, german, spanish.
+    | Must be a valid Language enum value: english, czech, slovak, german, spanish.
+    | @see \AmiPraha\AiTextTool\Language
     |
     */
     'default_language' => env('AI_TEXT_TOOL_LANGUAGE', 'english'),

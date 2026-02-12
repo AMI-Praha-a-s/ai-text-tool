@@ -2,6 +2,7 @@
 
 namespace AmiPraha\AiTextTool\Support;
 
+use AmiPraha\AiTextTool\Language;
 use RuntimeException;
 
 class PromptCatalog
@@ -11,19 +12,19 @@ class PromptCatalog
     public function __construct(
         private readonly string $packagePromptPath,
         private readonly ?string $customPromptPath,
-        private readonly string $defaultLanguage = 'english',
+        private readonly Language $defaultLanguage = Language::English,
     ) {}
 
     /**
      * @return array{language:string, system:string, user:string}
      */
-    public function operation(string $operation, ?string $requestedLanguage = null): array
+    public function operation(string $operation, ?Language $requestedLanguage = null): array
     {
         $candidates = array_values(array_unique(array_filter([
-            $this->normalizeLanguage($requestedLanguage),
-            $this->normalizeLanguage($this->defaultLanguage),
-            'english',
-        ])));
+            $requestedLanguage,
+            $this->defaultLanguage,
+            Language::English,
+        ]), SORT_REGULAR));
 
         foreach ($candidates as $language) {
             $prompts = $this->promptsForLanguage($language);
@@ -37,7 +38,7 @@ class PromptCatalog
             }
 
             return [
-                'language' => $language,
+                'language' => $language->value,
                 'system' => (string) $prompts[$operation]['system'],
                 'user' => (string) $prompts[$operation]['user'],
             ];
@@ -46,19 +47,19 @@ class PromptCatalog
         throw new RuntimeException(sprintf(
             'No language template found for operation "%s". Checked languages: %s',
             $operation,
-            implode(', ', $candidates),
+            implode(', ', array_map(fn (Language $l) => $l->value, $candidates)),
         ));
     }
 
-    private function promptsForLanguage(string $language): ?array
+    private function promptsForLanguage(Language $language): ?array
     {
-        if (array_key_exists($language, $this->cache)) {
-            return $this->cache[$language];
+        if (array_key_exists($language->value, $this->cache)) {
+            return $this->cache[$language->value];
         }
 
         $fileCandidates = array_values(array_filter([
-            $this->customPromptPath ? rtrim($this->customPromptPath, '/').'/'.$language.'.php' : null,
-            rtrim($this->packagePromptPath, '/').'/'.$language.'.php',
+            $this->customPromptPath ? rtrim($this->customPromptPath, '/').'/'.$language->value.'.php' : null,
+            rtrim($this->packagePromptPath, '/').'/'.$language->value.'.php',
         ]));
 
         foreach ($fileCandidates as $filePath) {
@@ -72,24 +73,13 @@ class PromptCatalog
                 continue;
             }
 
-            $this->cache[$language] = $content;
+            $this->cache[$language->value] = $content;
 
             return $content;
         }
 
-        $this->cache[$language] = null;
+        $this->cache[$language->value] = null;
 
         return null;
-    }
-
-    private function normalizeLanguage(?string $language): ?string
-    {
-        if (! is_string($language)) {
-            return null;
-        }
-
-        $normalized = strtolower(trim($language));
-
-        return $normalized === '' ? null : $normalized;
     }
 }
