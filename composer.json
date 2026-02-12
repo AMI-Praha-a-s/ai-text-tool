@@ -1,0 +1,38 @@
+{
+    "name": "amipraha/ai-text-tool",
+    "description": "Laravel AI-powered text operations with multilingual prompt packs.",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": "^8.2",
+        "illuminate/support": "^12.0",
+        "laravel/ai": "^1.0"
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.6",
+        "orchestra/testbench": "^10.0",
+        "phpunit/phpunit": "^11.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "AmiPraha\\AiTextTool\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "AmiPraha\\AiTextTool\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "AmiPraha\\AiTextTool\\AiTextToolServiceProvider"
+            ],
+            "aliases": {
+                "AiTextTool": "AmiPraha\\AiTextTool\\Facades\\AiTextTool"
+            }
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
