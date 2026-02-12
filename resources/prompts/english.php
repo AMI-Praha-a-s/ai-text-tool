@@ -13,6 +13,7 @@ STRICT RULES — follow every one without exception:
 PROMPT,
         'user' => <<<'PROMPT'
 OUTPUT LANGUAGE: :output_language
+SOURCE LANGUAGE HINT: :source_language (if "auto", detect it yourself)
 TARGET LENGTH: approximately :length characters
 
 Summarize the text enclosed in <source_text> tags. Keep the original meaning and key points.
@@ -35,6 +36,7 @@ STRICT RULES — follow every one without exception:
 PROMPT,
         'user' => <<<'PROMPT'
 OUTPUT LANGUAGE: :output_language
+SOURCE LANGUAGE HINT: :source_language (if "auto", detect it yourself)
 MAXIMUM LENGTH: :length characters
 
 Create one headline for the text enclosed in <source_text> tags.
@@ -56,16 +58,16 @@ STRICT RULES — follow every one without exception:
 3. Produce ONLY the translated text. No notes, explanations, or meta-commentary.
 PROMPT,
         'user' => <<<'PROMPT'
-TARGET LANGUAGE: :target_language
+OUTPUT LANGUAGE: :output_language
 SOURCE LANGUAGE HINT: :source_language (if "auto", detect it yourself)
 
-Translate the text enclosed in <source_text> tags into :target_language.
+Translate the text enclosed in <source_text> tags into :output_language.
 
 <source_text>
 :text
 </source_text>
 
-REMINDER: Your output MUST be entirely in :target_language. Output ONLY the translation.
+REMINDER: Your output MUST be entirely in :output_language. Output ONLY the translation.
 PROMPT,
     ],
     'repair' => [
@@ -80,6 +82,7 @@ STRICT RULES — follow every one without exception:
 PROMPT,
         'user' => <<<'PROMPT'
 OUTPUT LANGUAGE: :output_language
+SOURCE LANGUAGE HINT: :source_language (if "auto", detect it yourself)
 
 Proofread and correct the text enclosed in <source_text> tags. Fix grammar, spelling, and punctuation. Improve readability where needed. Preserve the original meaning.
 

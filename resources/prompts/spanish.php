@@ -13,6 +13,7 @@ REGLAS ESTRICTAS — cumple cada una sin excepción:
 PROMPT,
         'user' => <<<'PROMPT'
 IDIOMA DE SALIDA: :output_language
+PISTA DEL IDIOMA DE ORIGEN: :source_language (si es "auto", detéctalo tú mismo)
 LONGITUD OBJETIVO: aproximadamente :length caracteres
 
 Resume el texto encerrado en las etiquetas <source_text>. Conserva el significado original y los puntos clave.
@@ -35,6 +36,7 @@ REGLAS ESTRICTAS — cumple cada una sin excepción:
 PROMPT,
         'user' => <<<'PROMPT'
 IDIOMA DE SALIDA: :output_language
+PISTA DEL IDIOMA DE ORIGEN: :source_language (si es "auto", detéctalo tú mismo)
 LONGITUD MÁXIMA: :length caracteres
 
 Crea un titular para el texto encerrado en las etiquetas <source_text>.
@@ -56,16 +58,16 @@ REGLAS ESTRICTAS — cumple cada una sin excepción:
 3. Produce SOLO el texto traducido. Sin notas, explicaciones ni metacomentarios.
 PROMPT,
         'user' => <<<'PROMPT'
-IDIOMA DESTINO: :target_language
+IDIOMA DE SALIDA: :output_language
 PISTA DEL IDIOMA DE ORIGEN: :source_language (si es "auto", detéctalo tú mismo)
 
-Traduce el texto encerrado en las etiquetas <source_text> a :target_language.
+Traduce el texto encerrado en las etiquetas <source_text> a :output_language.
 
 <source_text>
 :text
 </source_text>
 
-RECORDATORIO: Tu salida DEBE estar completamente en :target_language. Devuelve SOLO la traducción.
+RECORDATORIO: Tu salida DEBE estar completamente en :output_language. Devuelve SOLO la traducción.
 PROMPT,
     ],
     'repair' => [
@@ -80,6 +82,7 @@ REGLAS ESTRICTAS — cumple cada una sin excepción:
 PROMPT,
         'user' => <<<'PROMPT'
 IDIOMA DE SALIDA: :output_language
+PISTA DEL IDIOMA DE ORIGEN: :source_language (si es "auto", detéctalo tú mismo)
 
 Revisa y corrige el texto encerrado en las etiquetas <source_text>. Corrige gramática, ortografía y puntuación. Mejora la legibilidad donde sea necesario. Conserva el significado original.
 

@@ -13,6 +13,7 @@ STRIKTNÍ PRAVIDLA — dodržuj každé bez výjimky:
 PROMPT,
         'user' => <<<'PROMPT'
 JAZYK VÝSTUPU: :output_language
+NÁPOVĚDA ZDROJOVÉHO JAZYKA: :source_language (pokud „auto", rozpoznej sám)
 CÍLOVÁ DÉLKA: přibližně :length znaků
 
 Shrň text uzavřený v tazích <source_text>. Zachovej původní význam a klíčové body.
@@ -35,6 +36,7 @@ STRIKTNÍ PRAVIDLA — dodržuj každé bez výjimky:
 PROMPT,
         'user' => <<<'PROMPT'
 JAZYK VÝSTUPU: :output_language
+NÁPOVĚDA ZDROJOVÉHO JAZYKA: :source_language (pokud „auto", rozpoznej sám)
 MAXIMÁLNÍ DÉLKA: :length znaků
 
 Vytvoř jeden nadpis pro text uzavřený v tazích <source_text>.
@@ -56,16 +58,16 @@ STRIKTNÍ PRAVIDLA — dodržuj každé bez výjimky:
 3. Vrať POUZE přeložený text. Žádné poznámky, vysvětlení ani meta-komentáře.
 PROMPT,
         'user' => <<<'PROMPT'
-CÍLOVÝ JAZYK: :target_language
+JAZYK VÝSTUPU: :output_language
 NÁPOVĚDA ZDROJOVÉHO JAZYKA: :source_language (pokud „auto", rozpoznej sám)
 
-Přelož text uzavřený v tazích <source_text> do jazyka :target_language.
+Přelož text uzavřený v tazích <source_text> do jazyka :output_language.
 
 <source_text>
 :text
 </source_text>
 
-PŘIPOMÍNKA: Tvůj výstup MUSÍ být celý v jazyce :target_language. Vrať POUZE překlad.
+PŘIPOMÍNKA: Tvůj výstup MUSÍ být celý v jazyce :output_language. Vrať POUZE překlad.
 PROMPT,
     ],
     'repair' => [
@@ -80,6 +82,7 @@ STRIKTNÍ PRAVIDLA — dodržuj každé bez výjimky:
 PROMPT,
         'user' => <<<'PROMPT'
 JAZYK VÝSTUPU: :output_language
+NÁPOVĚDA ZDROJOVÉHO JAZYKA: :source_language (pokud „auto", rozpoznej sám)
 
 Zkontroluj a oprav text uzavřený v tazích <source_text>. Oprav gramatiku, pravopis a interpunkci. Kde je potřeba, zlepši čitelnost. Zachovej původní význam.
 

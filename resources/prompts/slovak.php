@@ -13,6 +13,7 @@ STRIKTNÉ PRAVIDLÁ — dodržuj každé bez výnimky:
 PROMPT,
         'user' => <<<'PROMPT'
 JAZYK VÝSTUPU: :output_language
+NÁPOVEDA ZDROJOVÉHO JAZYKA: :source_language (ak „auto", rozpoznaj sám)
 CIEĽOVÁ DĹŽKA: približne :length znakov
 
 Zhrň text uzavretý v tagoch <source_text>. Zachovaj pôvodný význam a kľúčové body.
@@ -35,6 +36,7 @@ STRIKTNÉ PRAVIDLÁ — dodržuj každé bez výnimky:
 PROMPT,
         'user' => <<<'PROMPT'
 JAZYK VÝSTUPU: :output_language
+NÁPOVEDA ZDROJOVÉHO JAZYKA: :source_language (ak „auto", rozpoznaj sám)
 MAXIMÁLNA DĹŽKA: :length znakov
 
 Vytvor jeden nadpis pre text uzavretý v tagoch <source_text>.
@@ -56,16 +58,16 @@ STRIKTNÉ PRAVIDLÁ — dodržuj každé bez výnimky:
 3. Vráť LEN preložený text. Žiadne poznámky, vysvetlenia ani meta-komentáre.
 PROMPT,
         'user' => <<<'PROMPT'
-CIEĽOVÝ JAZYK: :target_language
+JAZYK VÝSTUPU: :output_language
 NÁPOVEDA ZDROJOVÉHO JAZYKA: :source_language (ak „auto", rozpoznaj sám)
 
-Prelož text uzavretý v tagoch <source_text> do jazyka :target_language.
+Prelož text uzavretý v tagoch <source_text> do jazyka :output_language.
 
 <source_text>
 :text
 </source_text>
 
-PRIPOMIENKA: Tvoj výstup MUSÍ byť celý v jazyku :target_language. Vráť LEN preklad.
+PRIPOMIENKA: Tvoj výstup MUSÍ byť celý v jazyku :output_language. Vráť LEN preklad.
 PROMPT,
     ],
     'repair' => [
@@ -80,6 +82,7 @@ STRIKTNÉ PRAVIDLÁ — dodržuj každé bez výnimky:
 PROMPT,
         'user' => <<<'PROMPT'
 JAZYK VÝSTUPU: :output_language
+NÁPOVEDA ZDROJOVÉHO JAZYKA: :source_language (ak „auto", rozpoznaj sám)
 
 Skontroluj a oprav text uzavretý v tagoch <source_text>. Oprav gramatiku, pravopis a interpunkciu. Kde je potreba, zlepši čitateľnosť. Zachovaj pôvodný význam.
 

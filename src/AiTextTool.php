@@ -14,6 +14,7 @@ class AiTextTool
         private readonly ?string $model = null,
         private readonly ?int $timeout = null,
         private ?Language $language = null,
+        private ?Language $sourceLanguage = null,
     ) {}
 
     public function usingLanguage(Language $language): self
@@ -24,6 +25,21 @@ class AiTextTool
         return $clone;
     }
 
+    public function fromLanguage(Language $language): self
+    {
+        $clone = clone $this;
+        $clone->sourceLanguage = $language;
+
+        return $clone;
+    }
+
+    /**
+     * Summarize the source text into a shorter text.
+     *
+     * @param string $sourceText
+     * @param int $length
+     * @return string
+     */
     public function summarize(string $sourceText, int $length): string
     {
         $this->assertNonEmptyText($sourceText);
@@ -38,6 +54,13 @@ class AiTextTool
         );
     }
 
+    /**
+     * Generate a headline for the source text.
+     *
+     * @param string $sourceText
+     * @param int $length
+     * @return string
+     */
     public function headline(string $sourceText, int $length): string
     {
         $this->assertNonEmptyText($sourceText);
@@ -52,20 +75,33 @@ class AiTextTool
         );
     }
 
-    public function translate(string $sourceText, Language $targetLanguage, ?Language $sourceLanguage = null): string
+    /**
+     * Translate the source text into the configured output language. 
+     * It is recommended to use the `usingLanguage()` 
+     * and `fromLanguage()` methods to set the output 
+     * and source languages respectively.
+     *
+     * @param string $sourceText
+     * @return string
+     */
+    public function translate(string $sourceText): string
     {
         $this->assertNonEmptyText($sourceText);
 
         return $this->run(
             operation: 'translate',
             replacements: [
-                ':target_language' => $targetLanguage->value,
-                ':source_language' => $sourceLanguage?->value ?? 'auto',
                 ':text' => trim($sourceText),
             ],
         );
     }
 
+    /**
+     * Repair the source text to correct grammatical and spelling errors.
+     *
+     * @param string $sourceText
+     * @return string
+     */
     public function repair(string $sourceText): string
     {
         $this->assertNonEmptyText($sourceText);
@@ -81,7 +117,9 @@ class AiTextTool
     private function run(string $operation, array $replacements): string
     {
         $prompt = $this->promptCatalog->operation($operation, $this->language);
-        $replacements = $this->withOutputLanguage($operation, $prompt, $replacements);
+
+        $replacements[':output_language'] = $this->language?->value ?? (string) $prompt['language'];
+        $replacements[':source_language'] = $this->sourceLanguage?->value ?? 'auto';
 
         return $this->executor->generate(
             instructions: $this->interpolate((string) $prompt['system'], $replacements),
@@ -89,20 +127,6 @@ class AiTextTool
             model: $this->model,
             timeout: $this->timeout,
         );
-    }
-
-    /**
-     * @param array{language:string, system:string, user:string} $prompt
-     */
-    private function withOutputLanguage(string $operation, array $prompt, array $replacements): array
-    {
-        if ($operation === 'translate') {
-            return $replacements;
-        }
-
-        $replacements[':output_language'] = $this->language?->value ?? (string) $prompt['language'];
-
-        return $replacements;
     }
 
     private function interpolate(string $template, array $replacements): string

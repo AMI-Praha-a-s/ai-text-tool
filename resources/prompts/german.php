@@ -13,6 +13,7 @@ STRIKTE REGELN — befolge jede ohne Ausnahme:
 PROMPT,
         'user' => <<<'PROMPT'
 AUSGABESPRACHE: :output_language
+HINWEIS ZUR AUSGANGSSPRACHE: :source_language (wenn „auto", erkenne sie selbst)
 ZIELLÄNGE: etwa :length Zeichen
 
 Fasse den in <source_text>-Tags eingeschlossenen Text zusammen. Bewahre die ursprüngliche Bedeutung und die wichtigsten Punkte.
@@ -35,6 +36,7 @@ STRIKTE REGELN — befolge jede ohne Ausnahme:
 PROMPT,
         'user' => <<<'PROMPT'
 AUSGABESPRACHE: :output_language
+HINWEIS ZUR AUSGANGSSPRACHE: :source_language (wenn „auto", erkenne sie selbst)
 MAXIMALE LÄNGE: :length Zeichen
 
 Erstelle eine Überschrift für den in <source_text>-Tags eingeschlossenen Text.
@@ -56,16 +58,16 @@ STRIKTE REGELN — befolge jede ohne Ausnahme:
 3. Gib NUR den übersetzten Text aus. Keine Anmerkungen, Erklärungen oder Meta-Kommentare.
 PROMPT,
         'user' => <<<'PROMPT'
-ZIELSPRACHE: :target_language
+AUSGABESPRACHE: :output_language
 HINWEIS ZUR AUSGANGSSPRACHE: :source_language (wenn „auto", erkenne sie selbst)
 
-Übersetze den in <source_text>-Tags eingeschlossenen Text in :target_language.
+Übersetze den in <source_text>-Tags eingeschlossenen Text in :output_language.
 
 <source_text>
 :text
 </source_text>
 
-ERINNERUNG: Deine Ausgabe MUSS vollständig in :target_language sein. Gib NUR die Übersetzung aus.
+ERINNERUNG: Deine Ausgabe MUSS vollständig in :output_language sein. Gib NUR die Übersetzung aus.
 PROMPT,
     ],
     'repair' => [
@@ -80,6 +82,7 @@ STRIKTE REGELN — befolge jede ohne Ausnahme:
 PROMPT,
         'user' => <<<'PROMPT'
 AUSGABESPRACHE: :output_language
+HINWEIS ZUR AUSGANGSSPRACHE: :source_language (wenn „auto", erkenne sie selbst)
 
 Prüfe und korrigiere den in <source_text>-Tags eingeschlossenen Text. Korrigiere Grammatik, Rechtschreibung und Zeichensetzung. Verbessere die Lesbarkeit wo nötig. Bewahre die ursprüngliche Bedeutung.
 
