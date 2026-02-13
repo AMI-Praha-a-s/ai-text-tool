@@ -29,7 +29,7 @@ Languages are defined by the `AmiPraha\AiTextTool\Language` enum:
 ## Installation
 
 ```bash
-composer require amipraha/ai-text-tool
+composer require ami-praha/ai-text-tool
 ```
 
 Publish package config:

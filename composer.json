@@ -1,5 +1,5 @@
 {
-    "name": "amipraha/ai-text-tool",
+    "name": "ami-praha/ai-text-tool",
     "description": "OpenAI-powered text operations for Laravel with multilingual language packs.",
     "type": "library",
     "license": "MIT",
