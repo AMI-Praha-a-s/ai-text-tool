@@ -10,12 +10,6 @@
 - Text repair (grammar, punctuation, readability improvements).
 - Native language packs for multiple languages to improve output quality with non-English source text.
 
-## Breaking Change
-
-- Multi-provider support has been removed.
-- The package is now OpenAI-only.
-- `provider` config key no longer exists.
-
 ## Supported Languages
 
 Languages are defined by the `AmiPraha\AiTextTool\Language` enum:
