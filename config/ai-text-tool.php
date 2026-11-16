@@ -31,7 +31,7 @@ return [
     |
     */
     'openai_api_key' => env('AI_TEXT_TOOL_OPENAI_API_KEY', env('OPENAI_API_KEY')),
-    'openai_model' => env('AI_TEXT_TOOL_OPENAI_MODEL', 'gpt-5-mini'),
+    'openai_model' => env('AI_TEXT_TOOL_OPENAI_MODEL', 'gpt-6-luna'),
     'openai_base_url' => env('AI_TEXT_TOOL_OPENAI_BASE_URL', 'https://api.openai.com/v1'),
     'timeout' => (int) env('AI_TEXT_TOOL_TIMEOUT', 60),
 ];
